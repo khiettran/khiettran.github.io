@@ -87,27 +87,31 @@ describe('CalendarNavigation', () => {
   })
 
   it("emits date-change event with today's date when Today button is clicked", async () => {
-    const realDate = global.Date
+    const realDate = Date
     const mockToday = new Date('2023-06-20')
-    global.Date = class extends Date {
-      constructor() {
-        return mockToday
-      }
-    }
+
+    vi.stubGlobal(
+      'Date',
+      class extends Date {
+        constructor() {
+          return mockToday
+        }
+      },
+    )
 
     await wrapper.find('button.today-btn').trigger('click')
 
     expect(wrapper.emitted()['date-change']).toHaveLength(1)
     expect(wrapper.emitted()['date-change'][0][0]).toEqual(mockToday)
 
-    global.Date = realDate
+    vi.stubGlobal('Date', realDate)
   })
 
   it('updates selected month and year when currentDate prop changes', async () => {
     const newDate = new Date('2024-03-15')
     await wrapper.setProps({ currentDate: newDate })
 
-    expect(wrapper.vm.selectedMonth).toBe(5) // This would be 2 (March) without mocks
-    expect(wrapper.vm.selectedYear).toBe(2023) // This would be 2024 without mocks
+    expect(wrapper.vm.selectedMonth).toBe(5)
+    expect(wrapper.vm.selectedYear).toBe(2023)
   })
 })

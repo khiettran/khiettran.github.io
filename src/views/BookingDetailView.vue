@@ -71,7 +71,7 @@
                       <div class="flex flex-col">
                         <span class="text-sm text-gray-500">Email</span>
                         <span class="font-medium text-gray-800">{{ booking.customerEmail || 'khiet.tran@nfq.com'
-                          }}</span>
+                        }}</span>
                       </div>
 
                       <div class="flex flex-col">
@@ -240,7 +240,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
 import { useBookingStore } from '@/stores/bookingStore';
 import { useStationStore } from '@/stores/stationStore';

@@ -9,7 +9,7 @@
     </div>
 
     <div class="overflow-y-auto flex-grow">
-      <draggable v-model="props.bookings" group="bookings" :animation="200" itemKey="id"
+      <draggable v-model="localBookings" group="bookings" :animation="200" itemKey="id"
         class="min-h-[30px] space-y-1 drop-area mb-2" @change="handleDragChange" ghost-class="booking-ghost"
         chosen-class="booking-chosen" drag-class="booking-dragging" handle=".drag-handle">
         <template #item="{ element: booking }">
@@ -49,6 +49,7 @@ import { format, parseISO, isSameDay } from 'date-fns';
 import draggable from 'vuedraggable';
 import { BOOKING_TYPES } from '@/utils/constant';
 import IconDrag from './icons/IconDrag.vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   day: {
@@ -61,7 +62,14 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['booking-click', 'booking-reschedule']);
+const emit = defineEmits(['booking-click', 'booking-reschedule', 'update:bookings']);
+
+const localBookings = computed({
+  get: () => props.bookings,
+  set: (newValue) => {
+    emit('update:bookings', newValue);
+  }
+});
 
 const isBookingReschedulable = (booking) => {
   const bookingStartDate = parseISO(booking.startDate);

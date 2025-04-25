@@ -14,7 +14,8 @@
     <div class="container mx-auto px-4 py-10">
       <div class="mb-8" data-aos="fade-up">
         <AutoComplete label="Select Station" placeholder="Search for a station..." :api-function="fetchStations"
-          @select="handleStationSelect" class="bg-white shadow-lg rounded-lg p-6 border border-gray-100" />
+          @select="handleStationSelect" class="bg-white shadow-lg rounded-lg p-6 border border-gray-100"
+          :default-value="selectedStation?.name" />
       </div>
 
       <transition name="fade" mode="out-in">
@@ -55,9 +56,9 @@
         <div v-else key="empty-state" class="bg-gray-50 rounded-lg p-12 text-center transition-all" data-aos="fade-up"
           data-aos-delay="200">
           <div class="max-w-md mx-auto">
-            <IconCalendar></IconCalendar>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2 mt-4">Empty State</h2>
-            <p class="text-gray-600 mb-6">Please select a station above to view available campervans and booking times.
+            <IconCalendar class="text-green-500"></IconCalendar>
+            <h2 class="text-2xl font-bold text-green-500 mb-2 mt-4">Empty State</h2>
+            <p class="text-gray-500 mb-6">Please select a station above to view available campervans and booking times.
             </p>
           </div>
         </div>
@@ -109,7 +110,7 @@ const router = useRouter();
 const stationStore = useStationStore();
 const bookingStore = useBookingStore();
 const currentWeekStart = ref(startOfToday());
-const selectedStation = ref(null);
+const selectedStation = ref(stationStore.selectedStation);
 const activeFilter = ref('all');
 const loading = computed(() => bookingStore.loading);
 const weekDays = computed(() => getWeekDays(currentWeekStart.value));
@@ -130,6 +131,7 @@ const handleDateChange = (date) => {
 
 const handleStationSelect = async (station) => {
   selectedStation.value = station;
+  stationStore.setSelectedStation(station);
   await fetchBookingsForCurrentWeek();
 };
 

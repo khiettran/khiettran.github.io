@@ -71,7 +71,7 @@
                       <div class="flex flex-col">
                         <span class="text-sm text-gray-500">Email</span>
                         <span class="font-medium text-gray-800">{{ booking.customerEmail || 'khiet.tran@nfq.com'
-                        }}</span>
+                          }}</span>
                       </div>
 
                       <div class="flex flex-col">
@@ -290,9 +290,13 @@ const stationName = computed(() => {
 onBeforeMount(async () => {
   const bookingId = route.params.id;
   const stationId = route.params.stationId;
-  await bookingStore.getBookingDetails(stationId, bookingId);
-  if (stationStore.stations.length === 0) {
+  if (!stationStore.stations.length) {
     await stationStore.fetchStations();
+  }
+  if (bookingStore.bookings.length) {
+    bookingStore.setSelectedBooking(bookingId);
+  } else {
+    await bookingStore.getBookingDetails(stationId, bookingId);
   }
 });
 </script>

@@ -52,6 +52,11 @@ export const useBookingStore = defineStore('booking', {
       this.selectedBooking = null
     },
 
+    setSelectedBooking(bookingId) {
+      const booking = this.bookings.find((booking) => booking.id === bookingId)
+      this.selectedBooking = booking
+    },
+
     rescheduleBooking(updateBooking) {
       this.loading = true
       // TODO: make an API call to update the booking
@@ -65,4 +70,5 @@ export const useBookingStore = defineStore('booking', {
       this.loading = false
     },
   },
+  persist: true,
 })

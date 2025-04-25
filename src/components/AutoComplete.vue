@@ -53,12 +53,16 @@ const props = defineProps({
   minChars: {
     type: Number,
     default: 2
+  },
+  defaultValue: {
+    type: String,
+    default: ''
   }
 });
 
 const emit = defineEmits(['select', 'search']);
 
-const searchQuery = ref('');
+const searchQuery = ref(props.defaultValue);
 const suggestions = ref([]);
 const selectedSuggestion = ref(null);
 const isLoading = ref(false);

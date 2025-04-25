@@ -30,9 +30,5 @@ export const useStationStore = defineStore('station', {
     setSelectedStation(station) {
       this.selectedStation = station
     },
-
-    clearSelectedStation() {
-      this.selectedStation = null
-    },
   },
 })

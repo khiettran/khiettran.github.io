@@ -10,7 +10,6 @@
             </div>
             <div>
               <span class="text-xl font-bold text-gray-900">CamperDash</span>
-              <span class="hidden md:inline-block text-sm text-green-600 ml-1">Premium Campervans</span>
             </div>
           </router-link>
 
